@@ -27,7 +27,7 @@ if (isset($GLOBALS["foo"])) {
 } else {
     echo "Foo is NOT in global scope.\n";
 }
-echo '<br>';
+echo '<hr> <br>';
 
 ###########################################################
 echo '$_FILES';
@@ -44,13 +44,20 @@ enctype="multipart/form-data">
 </body>
 </html>';
 if(isset($_FILES["file"])){
+    
 if ($_FILES["file"] > 0)
   {
-  echo "You have selected a file to upload ";
+    $target_dir = "uploads/";
+    $target_file = $target_dir . basename($_FILES["file"]["name"]);
+  echo "You have selected a file to upload <br>";
+  echo 'file name:', $_FILES["file"]["name"],'<br>';
+  echo 'tmp name:', $_FILES["file"]["tmp_name"],'<br>';
+  echo 'file size:', $_FILES["file"]["size"],'<br>'; 
+  echo 'file extension: ', strtolower(pathinfo($target_file,PATHINFO_EXTENSION)),'<br>';
   }
 }
 ######################################################################endregion
-echo '<br>';
+echo '<hr> <br>';
 echo '$_SERVER';
 echo '<br>';
 //server array is holds  info of the server ,here you are some examples
@@ -67,12 +74,13 @@ echo $_SERVER['HTTP_HOST'];//the host
 echo '<br>';
 //and other things  for example if we want to check if we are in the right path 
 if($_SERVER['PHP_SELF']==='/php-pdo/exersice2/index.php'){
-    echo 'you are in the right bath';
+    echo 'you are in the right bath <hr> ';
 }
 //each one then do what is propose for
 ######################################################################
 //$_REQUEST it used for collecting data after submitting and it contains the data of $_post ,$_get and $_COOKIE
 //see the example below
+echo '<br>';
 echo '$_REQUEST';
 echo '<br>';
 echo '
@@ -81,17 +89,21 @@ echo '
 </form>';
 if(isset($_REQUEST['name'])){
 $name=$_REQUEST['name'];
-echo $name;
+echo 'REQUEST value is :', $name;
 }
 ######################################################
 //post gets the data after submitting it through a form and used to pass vars
+echo '<hr> <br>';
 echo '$_POST';
 echo '<br>';
 if(isset($_POST['name'])){
     $name=$_POST['name'];
 echo '<br>';
-echo $name;
+echo 'POST value is :', $name;
+
 }
+echo '<hr> <br>';
+
 ###############################################################
 // used to get data from the link 
 echo '$GET';
@@ -100,9 +112,10 @@ echo '
 </html><a href="index.php?data=this-is-the-data-from-get">This is to send data</a>';
 echo '<br>';
 if(isset($_GET['data'])){
-echo $_GET['data'];
-echo '<br>';
+echo 'GET value is :',$_GET['data'];
 }
+echo '<hr> <br>';
+
 ##########################################################################
 //session is used to pass varaible and the best thing about session is that when u set a session var you can access it from anywhere in the project 
 echo '$_SESSION';
@@ -111,36 +124,22 @@ session_start();
 $_SESSION['newsession']='this isa new session';
 echo $_SESSION['newsession'];
 ##########################################################
+echo '<hr> <br>';
+
 echo '$_COOKIE';
 echo '<br>';
 echo '<br>';
-setrawcookie($_SERVER['PHP_SELF']);
+setcookie('cookie_name', 'cookie_value',  time()+ 60, '/', $_SERVER['SERVER_NAME'], false, false);
+setcookie('cookie_name2', 'cookie_value2',  time()+ 60, '/', $_SERVER['SERVER_NAME'], false, false);
 echo '<br>';
 print_r($_COOKIE);
+#################################################################################
+echo '<hr> <br>';
 echo '$_ENV';
 echo '<br>';
-// (new Dotenv())->load(__DIR__.'/.env');
-//  echo getenv('USER');
+var_dump(getenv('os'));
+$_ENV['NEWENV'] = 'HI';
+echo $_ENV['NEWENV']
+##############################################################################
 
-//  echo 'My username is ' .$_ENV["USER"] . '!';
-
-#################################################################################
-
-// THE SESSION_ID is used to set the session id for the current session and it can be used by writting the 
-// session_id('string id')<< passing a string id to the function and then starting the session or dioing what ever witht he param
-$sid =1;
-session_abort();
-session_id($sid);
-session_start();
-
-$test = 'Here';
-session_register('test');
-echo session_register('test');
-function session_is_registered($test)
-{
-    if (isset($_SESSION[$test]))
-    return true;
-    else
-    return false;
-}
 ?>
