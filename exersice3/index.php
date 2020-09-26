@@ -7,15 +7,15 @@ session_abort();
 session_id($sid);
 session_start();
 
-if(session_is_registered($sid)){
-    echo 'true';
-}
-else{
-    echo 'false';
-}
+// if(session_is_registered($sid)){
+//     echo 'true';
+// }
+// else{
+//     echo 'false';
+// }
 $test = 'Here';
-session_register('test');
-echo $_SESSION[$sid];
+// session_register('test');
+//echo $_SESSION[$sid];
 // function session_is_registered($test)
 // {
 //     if (isset($_SESSION[$test]))
@@ -23,4 +23,4 @@ echo $_SESSION[$sid];
 //     else
 //     return false;
 // }
-?>s
+?>
